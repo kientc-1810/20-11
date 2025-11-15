@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Thiệp của bạn - 20/11</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="container">
+    <div id="card" class="card" style="display:none;">
+      <img id="bg" class="bg" src="images/bg_thiep.png" alt="background" />
+      <div class="card-content">
+        <img id="avatar" class="avatar" src="" alt="Avatar" />
+        <h2 id="name" class="name"></h2>
+        <p id="message" class="message"></p>
+      </div>
+    </div>
+
+    <div id="error" class="error" style="display:none;"></div>
+  </main>
+
+  <script>
+    // Helper: get query param
+    function getParam(name) {
+      const params = new URLSearchParams(window.location.search);
+      return params.get(name);
+    }
+
+    const emailParam = (getParam('email') || '').toLowerCase();
+
+    // Load teachers.json and match by email
+    fetch('teachers.json')
+      .then(r => {
+        if (!r.ok) throw new Error('Không tải được dữ liệu.');
+        return r.json();
+      })
+      .then(list => {
+        const teacher = list.find(t => (t.email || '').toLowerCase() === emailParam);
+        if (!teacher) {
+          document.getElementById('error').style.display = 'block';
+          document.getElementById('error').innerText = 'Không tìm thấy thông tin. Vui lòng kiểm tra email hoặc liên hệ ban tổ chức.';
+          return;
+        }
+        // Fill content
+        document.getElementById('avatar').src = teacher.image || 'images/default-avatar.png';
+        document.getElementById('name').innerText = teacher.name || '';
+        document.getElementById('message').innerText = teacher.message || '';
+        document.getElementById('card').style.display = 'block';
+
+        // Prepare download button: create a PNG of the card using html2canvas (optional)
+        // Simpler approach: link to background + avatar raw. If you want full card PNG capture, you can include html2canvas (external lib).
+        // For simplicity, set download button to open current page screenshot via browser print.
+        
+
+        // Prepare mailto link
+        const subject = encodeURIComponent('Thiệp 20/11 dành cho ' + teacher.name);
+        const body = encodeURIComponent('Kính gửi ' + teacher.name + ',\n\n' + teacher.message + '\n\n[Thiệp đính kèm hoặc xem tại] ' + window.location.href);
+        document.getElementById('shareMail').href = 'mailto:' + teacher.email + '?subject=' + subject + '&body=' + body;
+      })
+      .catch();
+  </script>
+</body>
+</html>
