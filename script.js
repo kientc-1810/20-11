@@ -21,6 +21,6 @@ document.getElementById("cardForm").addEventListener("submit", function(e) {
         const imagePath = accData[accInput];
         window.location.href = `card.html?image=${encodeURIComponent(imagePath)}`;
     } else {
-        alert("Email không tồn tại trong danh sách!");
+        alert("Bạn không phải thành viên tổ chức FPT Education");
     }
 });
