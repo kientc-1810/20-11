@@ -1,14 +1,18 @@
 [
-  {
-    "email": "huyhv10@fe.edu.vn",
-    "name": "Hoàng Văn Huy",
-    "image": "/images/huyhv10.png",
-    "message": "Kính gửi Thầy Hoàng Văn Huy,\nChúc Thầy có một ngày 20/11 tràn đầy niềm vui và hạnh phúc. Cảm ơn Thầy vì những đóng góp không ngừng cho thế hệ sinh viên."
-  },
-  {
-    "email": "thuyhm6@fe.edu.vn",
-    "name": "Hà Minh Thủy",
-    "image": "images/thuyhm6.png",
-    "message": "Kính gửi Thầy Hà Minh Thủy,\nKính chúc Cô luôn mạnh khỏe, tràn đầy nhiệt huyết và nhiều niềm vui. Chúc Cô một ngày 20/11 thật ý nghĩa."
-  }
-]
+    {
+        "acc": "kientc",
+        "image": "images/kientc.png"
+    },
+    {
+        "acc": "huyhv10",
+        "image": "images/huyhv10.png"
+    },
+    {
+        "acc": "thuyhm6",
+        "image": "images/thuyhm6.png"
+    },
+    {
+        "acc": "vanct",
+        "image": "images/vanct.png"
+    }
+  ]

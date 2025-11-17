@@ -1,64 +1,128 @@
 <!DOCTYPE html>
 <html lang="vi">
+
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Thiệp của bạn - 20/11</title>
-  <link rel="stylesheet" href="style.css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Playfair+Display:wght@400;700&display=swap"
+        rel="stylesheet">
+    <title>Thiệp Chúc Mừng</title>
+    <style>
+        body {
+            font-family: 'Playfair Display', serif;
+            background: linear-gradient(to top right, #f4b360, #d66d75);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 0;
+            overflow-y: auto;
+        }
+
+        #card-display {
+            max-width: 700px;
+            width: 95%;
+            background: #fff;
+            padding: 30px;
+            border-radius: 25px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+            border: 4px solid #c0392b;
+            text-align: center;
+            transform: scale(1);
+            transition: transform 0.3s ease-in-out;
+            max-height: 95vh;
+            overflow-y: auto;
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        #card-display::-webkit-scrollbar {
+            display: none;
+        }
+
+        @media (min-width: 1024px) {
+            body {
+                overflow: hidden;
+            }
+
+            #card-display:hover {
+                transform: scale(1.01);
+                box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+            }
+        }
+
+        h1 {
+            color: #c0392b;
+            font-family: 'Dancing Script', cursive;
+            font-size: 2.5em;
+            margin-top: 0;
+            margin-bottom: 5px;
+            text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.1);
+        }
+
+        p {
+            color: #555;
+            font-size: 1.1em;
+            margin-bottom: 25px;
+            font-style: italic;
+        }
+
+        #card-display img {
+            display: block;
+            max-width: 100%;
+            max-height: 70vh;
+            height: auto;
+            width: auto;
+            margin: 15px auto;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            border: 1px solid #ddd;
+        }
+
+        a {
+            display: inline-block;
+            margin-top: 25px;
+            padding: 12px 25px;
+            background: #c0392b;
+            color: white;
+            text-decoration: none;
+            border-radius: 10px;
+            font-weight: bold;
+            transition: 0.3s;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        a:hover {
+            background: #e74c3c;
+            transform: translateY(-1px);
+        }
+    </style>
 </head>
+
 <body>
-  <main class="container">
-    <div id="card" class="card" style="display:none;">
-      <img id="bg" class="bg" src="images/bg_thiep.png" alt="background" />
-      <div class="card-content">
-        <img id="avatar" class="avatar" src="" alt="Avatar" />
-        <h2 id="name" class="name"></h2>
-        <p id="message" class="message"></p>
-      </div>
+
+    <div id="card-display">
+        <h1>💖 Chúc mừng Ngày Nhà giáo Việt Nam! 💖</h1>
+        <img id="finalCardImage" src="" alt="Thiệp chúc 20/11">
     </div>
 
-    <div id="error" class="error" style="display:none;"></div>
-  </main>
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const imagePath = urlParams.get('image');
 
-  <script>
-    // Helper: get query param
-    function getParam(name) {
-      const params = new URLSearchParams(window.location.search);
-      return params.get(name);
-    }
+        const imgElement = document.getElementById('finalCardImage');
 
-    const emailParam = (getParam('email') || '').toLowerCase();
-
-    // Load teachers.json and match by email
-    fetch('teachers.json')
-      .then(r => {
-        if (!r.ok) throw new Error('Không tải được dữ liệu.');
-        return r.json();
-      })
-      .then(list => {
-        const teacher = list.find(t => (t.email || '').toLowerCase() === emailParam);
-        if (!teacher) {
-          document.getElementById('error').style.display = 'block';
-          document.getElementById('error').innerText = 'Không tìm thấy thông tin. Vui lòng kiểm tra email hoặc liên hệ ban tổ chức.';
-          return;
+        if (imagePath) {
+            imgElement.src = decodeURIComponent(imagePath);
+        } else {
+            imgElement.alt = "Không tìm thấy thiệp";
+            document.getElementById('card-display').innerHTML = "<h1>Không tìm thấy thiệp chúc.</h1><a href='index.html'>Quay lại trang chủ</a>";
         }
-        // Fill content
-        document.getElementById('avatar').src = teacher.image || 'images/default-avatar.png';
-        document.getElementById('name').innerText = teacher.name || '';
-        document.getElementById('message').innerText = teacher.message || '';
-        document.getElementById('card').style.display = 'block';
-
-        // Prepare download button: create a PNG of the card using html2canvas (optional)
-        // Simpler approach: link to background + avatar raw. If you want full card PNG capture, you can include html2canvas (external lib).
-        // For simplicity, set download button to open current page screenshot via browser print.
-        
-
-        // Prepare mailto link
-        const subject = encodeURIComponent('Thiệp 20/11 dành cho ' + teacher.name);
-        const body = encodeURIComponent('Kính gửi ' + teacher.name + ',\n\n' + teacher.message + '\n\n[Thiệp đính kèm hoặc xem tại] ' + window.location.href);
-        document.getElementById('shareMail').href = 'mailto:' + teacher.email + '?subject=' + subject + '&body=' + body;
-      })
-      .catch();
-  </script>
+    </script>
 </body>
+
 </html>

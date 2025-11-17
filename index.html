@@ -1,39 +1,25 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Thiệp 20/11 - Nhập thông tin</title>
-  <link rel="stylesheet" href="style.css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thiệp Chúc 20/11</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <main class="container">
-    <h1>Thiệp 20/11</h1>
 
-    <form id="frm" class="form">
-      <label for="name">Họ và tên thầy/cô:</label>
-      <input id="name" name="name" type="text" placeholder="Ví dụ: Nguyễn Văn A" required>
+    <div class="container">
+        <h2>Gửi thiệp chúc 20/11</h2>
+        <p class="sub">Nhập account giảng viên để xem thiệp chúc (account FE)</p>
 
-      <label for="email">Email (bắt buộc, nhập chính xác):</label>
-      <input id="email" name="email" type="email" placeholder="abc@fe.edu.vn" required>
+        <form id="cardForm">
+            <label>Account giảng viên</label>
+            <input type="text" id="acc" placeholder="vd: kientc">
+            <button type="submit">Xem thiệp</button>
+        </form>
 
-      <button type="submit" class="btn">Xem thiệp</button>
-      <p id="msg" class="note"></p>
-    </form>
-  </main>
+        </div>
 
-  <script>
-    document.getElementById('frm').addEventListener('submit', function(e){
-      e.preventDefault();
-      const email = document.getElementById('email').value.trim().toLowerCase();
-      if (!email) {
-        document.getElementById('msg').innerText = 'Vui lòng nhập email hợp lệ.';
-        return;
-      }
-      // redirect to card.html with email param
-      const url = 'card.html?email=' + encodeURIComponent(email);
-      window.location.href = url;
-    });
-  </script>
+<script src="script.js"></script>
 </body>
 </html>
