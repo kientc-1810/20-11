@@ -9,6 +9,7 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Playfair+Display:wght@400;700&display=swap"
         rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     <title>Thiệp Chúc Mừng</title>
     <style>
         body {
@@ -111,18 +112,54 @@
     </div>
 
     <script>
-        const urlParams = new URLSearchParams(window.location.search);
-        const imagePath = urlParams.get('image');
+    function fireConfettiContinuous() {
+        const defaults = { startVelocity: 25, spread: 360, ticks: 60, zIndex: 0 };
 
-        const imgElement = document.getElementById('finalCardImage');
-
-        if (imagePath) {
-            imgElement.src = decodeURIComponent(imagePath);
-        } else {
-            imgElement.alt = "Không tìm thấy thiệp";
-            document.getElementById('card-display').innerHTML = "<h1>Không tìm thấy thiệp chúc.</h1><a href='index.html'>Quay lại trang chủ</a>";
+        function randomInRange(min, max) {
+            return Math.random() * (max - min) + min;
         }
-    </script>
+
+        const interval = setInterval(function() {
+            const particleCount = 20; 
+            confetti(Object.assign({}, defaults, { 
+                particleCount: particleCount, 
+                origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 },
+                colors: ['#c0392b', '#f4b360', '#e74c3c'] 
+            }));
+
+            confetti(Object.assign({}, defaults, { 
+                particleCount: particleCount, 
+                origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 },
+                colors: ['#c0392b', '#f4b360', '#e74c3c']
+            }));
+        }, 500); 
+    }
+
+    const urlParams = new URLSearchParams(window.location.search);
+    const imagePath = urlParams.get('image');
+
+    const imgElement = document.getElementById('finalCardImage');
+    const downloadBtn = document.getElementById('downloadButton'); 
+
+    if (imagePath) {
+        const decodedImagePath = decodeURIComponent(imagePath);
+        imgElement.src = decodedImagePath;
+        
+        if (downloadBtn) {
+            downloadBtn.href = decodedImagePath; 
+        }
+
+        fireConfettiContinuous();
+
+    } else {
+        imgElement.alt = "Không tìm thấy thiệp";
+        
+        if (downloadBtn) {
+            downloadBtn.style.display = 'none'; 
+        }
+        document.getElementById('card-display').innerHTML = "<h1>Không tìm thấy thiệp chúc.</h1>";
+    }
+</script>
 </body>
 
 </html>
